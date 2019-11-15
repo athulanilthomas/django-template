@@ -1,0 +1,26 @@
+<table class="table site-block-order-table mb-5">
+    <thead>
+        <th>Product</th>
+        <th>Total</th>
+    </thead>
+    <tbody>
+    {% for order_item in order.items.all %}
+    <tr>
+        <td>{{ order_item.item.title }} <strong class="mx-2">x</strong> {{ order_item.quantity }}</td>
+        <td>₹ {{ order_item.get_final_price }}</td>
+    </tr>
+    {% empty %}
+    <tr colspan=2>
+        <td>You have an <strong class="mx-2">Empty</strong> Cart</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
+        <td class="text-black">₹ {{ order.get_cart_price }}</td>
+    </tr>
+    <tr>
+        <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+        <td class="text-black font-weight-bold"><strong>₹ {{ order.get_cart_price }}</strong></td>
+    </tr>
+    </tbody>
+</table>

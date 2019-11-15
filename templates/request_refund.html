@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+
+{% endblock extra_head %}
+
+{% block content %}
+
+ <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Return</strong></div>
+        </div>
+      </div>
+    </div>  
+
+    <div class="site-section border-bottom" data-aos="fade">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-6">
+            <div class="block-16">
+              <figure>
+                <img src="{% static 'images/return.jpg' %}" alt="Image placeholder" class="img-fluid rounded">
+              </figure>
+            </div>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-5">
+            
+            
+            <div class="site-section-heading pt-3 mb-4">
+              <h2 class="text-black acc-titles">Request Return</h2>
+            </div>
+            <form method='POST' action=''>
+            {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-primary btn-lg py-3 btn-block" type='submit'>Request Return</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}
