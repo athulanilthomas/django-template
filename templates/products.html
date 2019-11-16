@@ -45,9 +45,9 @@
                 </div>
               </div>
             </div>
-            <div class="row mb-5">
+            <div class="infinite-container row mb-5">
             {% for item in items %}
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+              <div class="infinite-item col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
                 <div class="block-4 text-center border">
                   <figure class="block-4-image">
                     <a href="{{ item.get_absolute_url }}"><img src="{{ item.image.url }}" alt="Image placeholder" class="img-fluid"></a>
@@ -63,24 +63,28 @@
             <h3>Sorry, No items were found</h3>
             {% endfor %}
             </div>
+
+            <div class="loading lds-ripple"><div></div><div></div></div>
+            
             {% if is_paginated %}
             <div class="row" data-aos="fade-up">
               <div class="col-md-12 text-center">
                 <div class="site-block-27">
                   <ul>
-                    {% if page_obj.has_previous %}
-                      <li><a href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
-                    {% endif %}
-                    {% comment %} {% for page in paginator.page_range %}
-                      {% if page_obj.number == page %}
-                        <li class="active"><span>{{ page }}</span></li>
-                      {% else %}
-                        <li><a href="?page={{ page_obj.next_page_number }}">{{ page }}</a></li>
-                      {% endif %}
-                    {% endfor %} {% endcomment %}
                     {% if page_obj.has_next %}
-                      <li><a href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+                      <li><a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
                     {% endif %}
+                    <script>
+                      var infinite = new Waypoint.Infinite({
+                        element: $('.infinite-container')[0],
+                        onBeforePageLoad: function () {
+                          $('.loading').show();
+                        },
+                        onAfterPageLoad: function ($items) {
+                          $('.loading').hide();
+                        }
+                      });
+                    </script>
                   </ul>
                 </div>
               </div>
