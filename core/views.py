@@ -21,7 +21,7 @@ class ProductsView(ListView):
     model = Item
     context_object_name = 'items'
     template_name = 'products.html'
-    paginate_by = 5
+    paginate_by = 10
 
 
 class HomeView(ListView):
@@ -213,9 +213,9 @@ def add_to_cart(request, slug):
             if not order_item.quantity >= 6:
                 order_item.quantity += 1
                 order_item.save()
-                messages.info(request, "Item quantity updated.")
+                messages.success(request, "Item quantity updated.")
             else:
-                messages.error(request, "You can't add more than 6 products")
+                messages.warning(request, "You can't add more than 6 products")
                 return redirect('core:cart')
         else:
             order.items.add(order_item)
