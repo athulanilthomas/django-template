@@ -19,6 +19,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    # Providers
+    'allauth.socialaccount.providers.google',
+
     'crispy_forms',
     'django_countries',
     'stripe',
@@ -100,3 +103,8 @@ LOGIN_REDIRECT_URL = '/'
 
 STRIPE_SECRET_KEY = 'YOUR-STRIPE-SECRET-KEY'
 STRIPE_PUBLISHABLE_KEY = 'YOUR-STRIPE-PUBLISHABLE-KEY'
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
