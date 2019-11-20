@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.urls import reverse
-from django.utils.safestring import mark_safe
 from django.utils.html import format_html
+from django.contrib.auth.admin import UserAdmin
 
-from .models import Item, Order, OrderItem, Payments, BillingAddress, Refunds
+from .models import Item, Order, OrderItem, Payments, BillingAddress, Refunds, UserProfile
+from django.contrib.auth.models import User
 # Register your models here.
 
 
@@ -52,6 +53,24 @@ class OrderAdmin(admin.ModelAdmin):
     actions = [make_refund_accepted]
 
 
+class ProfileInline(admin.StackedInline):
+    model = UserProfile
+    can_delete = False
+    verbose_name_plural = 'Profile'
+    fk_name = 'user'
+
+
+class CustomUserAdmin(UserAdmin):
+    inlines = (ProfileInline, )
+
+    def get_inline_instances(self, request, obj=None):
+        if not obj:
+            return list()
+        return super(CustomUserAdmin, self).get_inline_instances(request, obj)
+
+
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
 admin.site.register(Item)
 admin.site.register(OrderItem)
 admin.site.register(Order, OrderAdmin)

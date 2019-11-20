@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
 from django_countries.fields import CountryField
+from PIL import Image
 
 CATEGORY_CHOICES = (
     ('S', 'Shirt'),
@@ -22,6 +23,24 @@ ORDER_STATUS_CHOICES = (
     ('SHP', 'Shipped'),
     ('DLV', 'Delivered')
 )
+
+SEX_CHOICE = (
+    ('M', 'Male'),
+    ('F', 'Female'),
+    ('OTH', 'Other')
+)
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image = models.ImageField(default='default.png', upload_to='profile_pics')
+    sex = models.CharField(
+        choices=SEX_CHOICE, max_length=3, blank=True, null=True)
+    phone = models.CharField(max_length=30, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s Profile"
 
 
 class Item(models.Model):
