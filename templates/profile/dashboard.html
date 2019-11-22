@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block extra_head %}
+<style>
+    @import url("https://fonts.googleapis.com/css?family=Teko:500");
+
+    html {
+        background-color: #1d1c21;
+        color: #cfcdd5;
+        font-family: sans-serif;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    .profile-card {
+        background-color: #eae9ec;
+        color: #050506;
+        padding: 15vmin 20vmin;
+        text-align: center;
+        background: linear-gradient(45deg, #fff calc(100% - 300px), #fff calc(100% - 300px), #fff calc(100% - 296px), #7971ea calc(100% - 296px));
+    }
+
+    @media (min-width: 800px) {
+        .profile-card {
+            padding-bottom: 25vmin;
+        }
+    }
+
+    .profile-card__title {
+        font-family: 'Teko';
+        font-weight: 500;
+        font-style: normal;
+        text-decoration: none;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        text-transform: uppercase;
+        margin: 0;
+        font-size: calc(28px + 8vmin);
+    }
+
+    .profile-card_subtitle {
+        margin: 0;
+        color: #615e6e;
+        font-size: 20px;
+    }
+
+    .profile_subtitle {
+        margin-bottom: 65px;
+    }
+
+    .profile-card__avatar {
+        display: inline-block;
+        margin: 0;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-projects h2 {
+        display: none;
+    }
+
+    .cards {
+        padding: 0 20px;
+        list-style: none;
+        max-width: 1200px;
+        margin: 20px auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+        grid-gap: 20px;
+    }
+
+    @media (min-width: 800px) {
+        .cards {
+            margin-top: -15vmin;
+            grid-template-columns: repeat(auto-fit, minmax(28ch, 1fr));
+        }
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        color: inherit;
+        background-color: #fff;
+        color: #1d1c21;
+        text-decoration: none;
+        padding: 20px;
+        height: 8em;
+        box-shadow: 0 2px 4px rgba(29, 28, 33, 0.2);
+    }
+
+    .card:hover {
+        background-color: #eae9ec;
+    }
+
+    .card:focus {
+        outline: 2px solid #0d62e0;
+    }
+
+    .card:hover,
+    .card:focus {
+        box-shadow: 0 2px 2px rgba(29, 28, 33, 0.5);
+    }
+
+    .card__title {
+        font-size: 33px;
+        margin: 0;
+        text-align: center;
+    }
+
+    .card__meta {
+        margin: auto 0 0 0;
+        color: #9491a1;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .icon-mobile:before {
+        content: "\e958";
+    }
+
+    .icon-bubble:before {
+        content: "\e96b";
+    }
+</style>
+{% endblock extra_head %}
+{% block content %}
+<div style="padding-top: 20px;" class="site-section">
+    <div class="user-profile">
+        <div class="profile-card">
+            <h1 class="profile-card__title">Hi, {{ request.user.username }}</h1>
+            <div class="profile_subtitle">
+                <p class="profile-card_subtitle"><span class="icon-pencil"></span>&nbsp {{ request.user.email }}</p>
+                <p class="profile-card_subtitle"><span class="icon-mobile"></span>&nbsp {{ request.user.userprofile.phone }}</p>
+            </div>
+            {% if request.user.is_anonymous %}     
+            <img class="profile-card__avatar"  src="{{ request.user.socialaccount_set.all.0.get_avatar_url }}" alt="Avatar for User" />
+            {% else %}
+            <img class="profile-card__avatar"  src="{{ request.user.userprofile.image.url }}" alt="Avatar for User" />
+            {% endif %}
+        </div>
+        <div class="profile-projects">
+            <ol class="cards">
+                <li><a class="card" href="{% url 'core:my-orders' %}">
+                        <h4 class="card__title"><span style="color: #0d62e0;" class="icon-shopping-bag"></span></h4>
+                        <p class="card__meta">My Orders
+                        </p>
+                    </a></li>
+                <li><a class="card" href="">
+                        <h4 class="card__title"><span style="color: #207561;" class="icon-address-book"></span></h4>
+                        <p class="card__meta">Manage Addresses
+                        </p>
+                    </a></li>
+                <li><a class="card" href="{% url 'core:request-refund' %}">
+                        <h4 class="card__title"><span style="color: #FF0000;" class="icon-undo"></span></h4>
+                        <p class="card__meta">Request Return
+                        </p>
+                    </a></li>
+
+            </ol>
+        </div>
+    </div>
+    {% endblock content %}

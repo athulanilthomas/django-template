@@ -24,19 +24,11 @@ ORDER_STATUS_CHOICES = (
     ('DLV', 'Delivered')
 )
 
-SEX_CHOICE = (
-    ('M', 'Male'),
-    ('F', 'Female'),
-    ('OTH', 'Other')
-)
-
 
 class UserProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(default='default.png', upload_to='profile_pics')
-    sex = models.CharField(
-        choices=SEX_CHOICE, max_length=3, blank=True, null=True)
     phone = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):

@@ -58,7 +58,6 @@
               <div class="site-top-icons">
                 <ul>
                 {% if request.user.is_authenticated %}
-                  <li><a href="#"><span class="icon icon-person"></span></a></li>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                   <li>
                     <a href="{% url 'core:cart' %}" class="site-cart">
@@ -101,13 +100,22 @@
                 </li>
               </ul>
             </li>
-            <li><a href="#">Catalogue</a></li>
-            <li><a href="#">New Arrivals</a></li>
+            <li><a href="#">Latest</a></li>
             <li><a href="#">Contact</a></li>
             {% if not request.user.is_authenticated  %}     
             <li><a style="color: #fafafa" href="{% url 'account_login' %}" class="btn btn-primary btn-sm">Login</a></li>
+            {% else %}
+            <li class="has-children">
+              <a  href=""><span style="letter-spacing: 5.53px;" class="icon icon-person"></span>Account</a>
+              <ul class="dropdown">
+                <li><a href="{% url 'core:dashboard' %}">Profile</a></li>
+                <li><a href="{% url 'core:my-orders'  %}">My orders</a></li>
+                {% if request.user.has_usable_password %}
+                  <li><a href="{% url 'account_change_password' %}">Change password</a></li>
+                {% endif %}
+              </ul>
+            </li>
             {% endif %}
-
           </ul>
         </div>
       </nav>

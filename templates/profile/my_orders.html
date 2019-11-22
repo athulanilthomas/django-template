@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+
+<style>
+    .order_container {
+        width: 100%;
+        border: 1px solid #d7d7d7;
+        background-color: #fff;
+        padding: 3px 3px 0px;
+        margin: 20px;
+    }
+
+    .order_id_con,
+    .order_summary {
+        background-color: #f9f9f9;
+        border-bottom: 1px solid#e6e6e6;
+    }
+
+    .order_summary {
+        padding: 10px;
+    }
+
+    .order_details {
+        padding: 10px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .order_details span {
+        text-transform: capitalize;
+        font-size: 16px;
+        color: #878787;
+    }
+
+    .track_btn {
+        border-color: #2874f0 !important;
+        color: black !important;
+    }
+
+    .track_btn:hover {
+        background-color: transparent !important;
+        border-color: #2874f0 !important;
+    }
+
+    h6 {
+        display: inline;
+        text-transform: capitalize;
+        font-weight: 400;
+        color: black !important;
+    }
+</style>
+
+{% endblock extra_head %}
+
+{% block content %}
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-0"><a href="index.html">Account</a> <span class="mx-2 mb-0">/</span> <strong
+                    class="text-black">My Orders</strong></div>
+        </div>
+    </div>
+</div>
+
+<div  class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="row">
+
+                    {% for order in orders %}
+                    <!-- Single Order -->
+                    <div class="order_container" class="col-md-12">
+                        <div class="order_id_con my-auto d-flex justify-content-between bd-highlight mb-3">
+                            <div class="p-2 bd-highlight">
+                                <p><a style="background-color: #2874f0; border-color: #2874f0;" href="#"
+                                        class="btn btn-sm btn-primary">{{ order.ref_code }}</a></p>
+                            </div>
+                            <div class="p-2 bd-highlight">
+                                <a  class="track_btn btn btn-outline-primary btn-sm btn-block" >
+                                    {{ order.get_status_display }}
+                                </a>
+                            </div>
+                        </div>
+
+                        {% for order_item in  order.items.all %}
+                        <div class="order_details">
+                            <div class="row mb-3">
+                                <div style="text-align: left;" class="col-md-4">
+                                    <div style="margin-bottom: 5px;">
+                                        <h6>Product : </h6><span> {{ order_item.item.title }}</span><br>
+                                    </div>
+                                    <h6>Quantity : </h6><span> {{ order_item.quantity}}</span>
+                                </div>
+                                <div style="text-align: center;" class="col-md-4">
+                                    <h6>Price : </h6><span> ₹{{ order_item.item.price }}</span>
+                                </div>
+                                <div style="text-align: right;" class="col-md-4">
+                                    <h6>Return-Period : </h6> PASS
+                                </div>
+                            </div>
+                        </div>            
+                        {% endfor %}
+                        <div class="order_summary">
+                            <div class="d-flex my-auto justify-content-between bd-highlight mb-3">
+                                <div class="p-2 bd-highlight">
+                                    <h6>Ordered on : </h6><span> {{ order.ordered_date|date:"D d F Y"  }}</span>
+                                </div>
+                                <div class="p-2 bd-highlight">
+                                    <h6>Order total : </h6><span> ₹{{ order.get_cart_price }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Order END-->
+                    {% empty %}
+                    <div class="text-center col-md-12">
+                        <h6 style="font-size:22px; font-weight: 100">you havent ordered anything yet !! </h6>
+                        <div class="mt-5 mb-5">
+                            <button onclick="window.location='/'" class="btn btn-primary btn-sm"> Continue Shopping
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div> {% endblock content %}
