@@ -11,6 +11,7 @@ from .views import (
     remove_single_item,
     RequestRefundView,
     ProfileOrderView,
+    ProfileDashboardView,
 )
 
 app_name = 'core'
@@ -23,6 +24,7 @@ urlpatterns = [
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('payment/<payment_method>', PaymentView.as_view(), name='payment'),
     path('request-refund/', RequestRefundView.as_view(), name='request-refund'),
+    path('profile/dashboard/', ProfileDashboardView, name='dashboard'),
     path('profile/orders/', ProfileOrderView.as_view(), name='my-orders'),
     path('add-to-cart/<slug>', add_to_cart, name='add-to-cart'),
     path('remove-from-cart/<slug>', remove_from_cart, name='remove-from-cart'),

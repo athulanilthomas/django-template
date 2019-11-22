@@ -36,7 +36,12 @@ class ProductDetailView(DetailView):
     template_name = "product_detail.html"
 
 
-class ProfileOrderView(ListView):
+@login_required
+def ProfileDashboardView(request):
+    return render(request, 'profile/dashboard.html')
+
+
+class ProfileOrderView(LoginRequiredMixin, ListView):
     model = Order
     context_object_name = 'orders'
     template_name = 'profile/my_orders.html'
